@@ -1,11 +1,11 @@
-from score import comp10001huxxy_score as score
+from score import huxxy_score as score
 from add_to_table import add_to_table
 from sort_hand import recur_next_card
 from collections import defaultdict as dd
 
 best_moves = []
 
-def comp10001huxxy_bonus_play(play_history, active_player, hand, table):
+def huxxy_bonus_play(play_history, active_player, hand, table):
     '''The function determines the best play, based on the player's hand, play
     history, and the current table state'''
     
