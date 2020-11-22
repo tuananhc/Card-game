@@ -1,0 +1,141 @@
+1. Game Description
+
+For simplicity sake, let's call this game huxxy - a variation of the game Rummy
+and based around multiples of 6. The game is played with two standard packs of 
+52 cards. Each card has a “suit” (Spades, Clubs, Hearts, Diamonds) as well as a
+“value” (numbers 2 to 10, as well as Jack, Queen, King and Ace). 
+
+For the purposes of this game, Aces are considered to have value 1, Jacks 11, 
+Queens 12, and Kings 13. The game makes strong use of the notion of the 
+“colour” of a card, where Spades and Clubs are black, and Hearts and Diamonds 
+are red.
+
+We will refer to the cards by way of a two-character string, made up of the 
+value ('A234567890JQK', where 'A' refers to an Ace, '0' a 10, 'J' a Jack, 'Q' 
+a Queen, and 'K' a King) and suit ('SHDC', indicating Spades, Hearts, Diamonds,
+and Clubs, respectively). For example, '0C' is the 10 of Clubs, and 'AS' is 
+the Ace of Spades.
+
+2 The Rules of Comp10001-huxxy
+
+2.1 Overview
+
+Huxxy is a 4-player game, where the objective is to be the first player to get 
+rid of all your cards.
+The primary components of the game are:
+• a “hand” of 1 or more cards, from which cards are selected to play to the 
+table;
+• a “stock” of cards that players draw from when they are unable to (or 
+choose not to) play cards from their hand.
+• a “table”, made up of groups of cards (either N-of-a-kind groups or runs; 
+see below for details)
+Note that a player’s hand is not revealed to other players, and the contents 
+of the stock are hidden from all players, in that the stock cards are turned 
+face-down throughout the game.
+A single turn proceeds as follows. Each player either picks up a single card 
+from the stock, or alternatively performs a series of plays of card(s) from 
+their hand to the table to form groups and movements of cards already on the 
+table between groups.
+Play continues until a player has played all cards from their hand, or the 
+stock is exhausted.
+
+2.2 Starting a Game
+At the start of a new game, the combined deck of 104 cards is shuffled, and 
+each player is dealt 12 cards. The remaining cards are placed face down in the
+middle of the table and form the “stock”.
+The sequence of players is fixed throughout the game, and play proceeds 
+clockwise.
+
+2.3 An Individual Turn
+
+A single turn consists of either:
+• selecting the single top card from the stock, and adding it to the player’s 
+hand; OR:
+• playing at least one card from the player’s hand to a group on the table 
+(including the possibility of starting a new group), and up to another 5 plays,
+either in the form of other cards played to the table, or individual cards 
+moved between groups (see below for details); importantly, in a “table” turn,
+the first play must be from the player’s hand to the table, and each play of a
+single card from the hand or move of a single card between groups on the table 
+constitutes a single play (i.e. up to six cards in total can be moved in a 
+turn, with at least one of those to be a card from the player’s hand).
+
+2.4 Opening Turn
+
+The first time each player plays to the table is called an “opening turn”, in 
+which cards of at least 24 points in face value must be played to the table to
+form groups (possibly building off groups already on the table, and possibly in
+the form of new group(s)). For example, playing three Eights (or any 3-of-a-
+kind of higher face value) constitutes an opening turn, whereas playing a run 
+of four cards from Two to Five (e.g. ['2C', '3H', '4S', '5H'] = combined face 
+value of 14) does not. Note that on completion of the turn, all groups must 
+form valid N-of-a-kind groups or runs, but that during the turn, it is possible 
+that the table state is not valid (e.g. because of placing a single card to 
+start a new group).
+Once a player has completed their opening turn, in subsequent turns, they can 
+build on and rearrange existing groups, and there is no constraint on the 
+minimum value of the cards they can play (but they must play at least one card 
+to the table if they are not picking up from the stock). Note that each player 
+must complete their own opening turn in order to be able to play to the table.
+
+2.5 Table Groups
+
+A group on the table can take one of two forms:
+• a “run” of three or more cards, where the values of the cards form a 
+continuous sequence in terms of value (e.g. 6, 7, 8, 9), and alternate in 
+colour (e.g. red, black, red, black); note that runs cannot wrap around from 
+King back to Ace;
+• an N-of-a-kind group of three or more cards, all of the same value; if there
+are four or less cards, all cards must be of different suits (noting that the 
+game is played with two decks of cards, meaning that two of every card are in 
+play), and if there are more than four cards, all suits must be present.
+The importance of moving tabled cards between groups becomes evident once a 
+number of groups are on the table. For example, if there were a run of ['2C', 
+'3H', '4S', '5H'] and the player held a '4C' and '3D', they could remove the 
+'2C' to start a new group, and place the two cards from their hand to make the
+new run ['2C', '3D', '4C'], leaving three cards in the original run as a second
+(smaller but still valid) run (['3H', '4S', '5H'].
+Remember, however, that at least
+one card must always be played from the hand, the maximum number of plays in a 
+turn is six, and the configuration of the groups at the end of the turn must be
+valid (i.e. they must all be valid runs or N-of-a-kind groups).
+
+2.6 The End of the Game
+
+The game ends when a player exhausts their hand, in which case the ranking of 
+players is determined in increasing order of the total face value of cards in 
+their hand (with the player who exhausted their hand getting a score of 0). 
+Alternatively, if no player is able to play all their cards but the stock is
+exhausted, the game ends, and again, the ranking of players is determined by 
+the total face value of the cards in their hand.
+
+3 Bonus Version of Game
+
+The bonus version of the game (as used in the bonus question) has the following
+additional element:
+• 2 Jokers (represented as 'XX') are added to the pack of cards;
+• Jokers act as wild cards (i.e. they take on the value/suit of any non-Joker 
+card) when they are played to a group on the table; as long as there is at 
+least one card that the Joker can represent to form a valid group, the exact 
+value of the Joker can remain indeterminate. For example, if the case of the 
+group ['2C', '3H', 'XX'], the Joker could be any of 'AH', 'AD', '4S', '4C', to 
+form a valid run; and for ['3C', '3H', 'XX'], the Joker could be either '3D' 
+or '3S' . The only constraint here is that there can be at most one instance of
+the card the Joker represents in that group (the only practical upshot of which
+is that a Joker can’t be played on an 8-of-a-kind group to make a 9-of-a-kind!)
+• For the purposes of scoring an opening turn, Jokers score 0 points (i.e. they
+can be played, but do not contribute to the 24 point threshold for cards played
+from the hand);
+• Jokers may be moved from one group to another as per usual (potentially 
+changing the card(s) they represent in the process), but the usual requirement 
+on the validity of the table state at the end of the turn holds; in practice, 
+this means that in order to “free up” a Joker from one group where the Joker is 
+required for the group to be valid (e.g. for a run such as ['2C', '4S', '5H', 
+'XX'], the group is invalidated if the Joker is removed, whereas in the case of
+['3H', '4S', '5H', 'XX'], the Joker can be removed without invalidating the 
+group), a card must be added to that group which instantiates a card type 
+required for the group to be valid (e.g. in the case of the first run, '3H' or 
+'3D');
+• Only one Joker may be played to a given group;
+• Jokers are scored as 48 points if they are left in the hand at the end of 
+play.
